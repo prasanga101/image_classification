@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import os
@@ -16,6 +16,11 @@ def preprocess_image(image_path):
     img_array = img_array.reshape((1,) + img_array.shape)
     return img_array
 
+# Ensure 'uploads' directory exists
+UPLOADS_DIR = 'uploads'
+if not os.path.exists(UPLOADS_DIR):
+    os.makedirs(UPLOADS_DIR)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     result = None
@@ -32,7 +37,7 @@ def index():
         if file:
             # Save the uploaded file
             filename = file.filename
-            file_path = os.path.join('uploads', filename)
+            file_path = os.path.join(UPLOADS_DIR, filename)
             file.save(file_path)
             # Preprocess the uploaded image
             processed_image = preprocess_image(file_path)
