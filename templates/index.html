@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classifier</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Classifier</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="file-upload" class="custom-file-upload">
+                <i class="fas fa-cloud-upload-alt"></i> Choose Image
+            </label>
+            <input id="file-upload" type="file" name="file" accept=".jpg, .jpeg, .png">
+            <input type="submit" value="Classify">
+        </form>
+        {% if result %}
+        <div class="result">
+            <p>{{ result }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
